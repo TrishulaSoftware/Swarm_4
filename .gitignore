@@ -97,3 +97,28 @@ npm-debug.log*
 
 # === MANIFEST / INFRA METADATA ===
 .sovereign-manifest.json
+
+# Infra traces
+*.json
+*.png
+*.jpg
+*.gif
+*.html
+*.bat
+*.sh
+*.ps1
+*.tf
+*.txt
+receipts/
+Sovereign-PaaS/receipts/
+*_ORIGINAL.py
+*_backup.py
+scratch_*.py
+_test_*.py
+setup_*.py
+enable_*.py
+bootstrap_*.py
+store_*.py
+generate_*.py
+send_wave*.py
+send_60day*.py
