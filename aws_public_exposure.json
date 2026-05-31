@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-05-26T22:34:23.879423+00:00",
+  "api_gateway": {
+    "status": "LIVE",
+    "api_id": "4g3s9zys7b",
+    "url": "https://4g3s9zys7b.execute-api.us-east-2.amazonaws.com",
+    "activated": "2026-05-26T22:34:23.879423+00:00"
+  },
+  "cloudfront": {
+    "status": "LIVE",
+    "id": "E2U9ABHVX5BK9I",
+    "domain": "d3osgozw6yxhsl.cloudfront.net",
+    "activated": "2026-05-26T22:35:04.990927+00:00"
+  },
+  "free_tiers": {
+    "api_gateway": "1M calls/month forever",
+    "cloudfront": "1TB transfer/month + 10M requests forever"
+  }
+}

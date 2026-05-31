@@ -1,0 +1,9 @@
+{
+  "id": "wave1_send_20260429T175149",
+  "type": "OUTREACH_WAVE",
+  "wave": 1,
+  "sent": 61,
+  "failed": 0,
+  "mode": "DRY_RUN",
+  "attestation": "da04f2459d296bbfce8a62609bbaa1b9d38501a3c896e86ddcf4f046246c51f7"
+}

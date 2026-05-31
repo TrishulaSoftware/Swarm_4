@@ -1,0 +1,15 @@
+# Sovereign PaaS — Master Caddyfile
+# Auto-generated. Do not edit manually.
+# Individual site configs are in D:\Trishula-Infra\Sovereign-PaaS\caddy\sites/
+
+{
+    # Global options
+    admin localhost:2019
+    email admin@sovereign.local
+
+    # Auto-HTTPS (Let's Encrypt)
+    # Uncomment for production:
+    # acme_ca https://acme-v02.api.letsencrypt.org/directory
+}
+
+import D:\Trishula-Infra\Sovereign-PaaS\caddy\sites/*.caddy

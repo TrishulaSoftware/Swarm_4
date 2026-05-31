@@ -1,0 +1,15 @@
+{
+    "active_faults":  [
+                          "RF-006 — Docker Daemon DOWN"
+                      ],
+    "simulation_status":  "1M sim APPROVED — execution pending",
+    "id":  "receipt_pulse_v2_25",
+    "type":  "PULSE_SITREP",
+    "pulse_number":  48,
+    "archive_path":  "H:\\Trishula_Pulses\\PULSE_V2_25_DOCKER_DOWN.md",
+    "violations":  "ZERO",
+    "timestamp":  "2026-04-29T13:26:12Z",
+    "compliance_verdict":  "PASS WITH ACTIVE FAULT RF-006",
+    "new_threat":  "SAP npm Mini Shai-Hulud — AI coding agent targeting (04/29/2026)",
+    "ci_status":  "17/17 GREEN"
+}

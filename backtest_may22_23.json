@@ -1,0 +1,225 @@
+{
+  "price_data": {
+    "SPY": {
+      "2026-05-22": {
+        "open": 746.24,
+        "high": 748.94,
+        "low": 744.48,
+        "close": 745.64,
+        "range": 4.46
+      }
+    },
+    "QQQ": {
+      "2026-05-22": {
+        "open": 718.07,
+        "high": 722.12,
+        "low": 715.95,
+        "close": 717.54,
+        "range": 6.17
+      }
+    },
+    "IWM": {
+      "2026-05-22": {
+        "open": 284.1,
+        "high": 286.61,
+        "low": 283.67,
+        "close": 285.12,
+        "range": 2.94
+      }
+    },
+    "NVDA": {
+      "2026-05-22": {
+        "open": 220.9,
+        "high": 221.01,
+        "low": 214.8,
+        "close": 215.33,
+        "range": 6.21
+      }
+    },
+    "TSLA": {
+      "2026-05-22": {
+        "open": 422.67,
+        "high": 431.51,
+        "low": 420.51,
+        "close": 426.01,
+        "range": 11.0
+      }
+    },
+    "AAPL": {
+      "2026-05-22": {
+        "open": 306.12,
+        "high": 311.4,
+        "low": 305.84,
+        "close": 308.82,
+        "range": 5.56
+      }
+    },
+    "AMZN": {
+      "2026-05-22": {
+        "open": 268.66,
+        "high": 269.79,
+        "low": 266.24,
+        "close": 266.32,
+        "range": 3.55
+      }
+    },
+    "MSFT": {
+      "2026-05-22": {
+        "open": 419.54,
+        "high": 424.4,
+        "low": 416.33,
+        "close": 418.57,
+        "range": 8.07
+      }
+    },
+    "SOXL": {
+      "2026-05-22": {
+        "open": 184.8,
+        "high": 195.27,
+        "low": 183.34,
+        "close": 190.56,
+        "range": 11.93
+      }
+    },
+    "TNA": {
+      "2026-05-22": {
+        "open": 64.55,
+        "high": 66.17,
+        "low": 64.23,
+        "close": 65.17,
+        "range": 1.94
+      }
+    }
+  },
+  "log_data": {
+    "scanner_midday.log": [
+      "[SPY] Spot: $750.59  MaxPain: $745",
+      "[QQQ] Spot: $730.28  MaxPain: $717",
+      "[IWM] Spot: $290.51  MaxPain: $281",
+      "[SOXL] Spot: $225.79  MaxPain: $205",
+      "[SMH] Spot: $602.14  MaxPain: $570",
+      "[IBIT] Spot: $42.99  MaxPain: $44",
+      "[GDX] Spot: $88.50  MaxPain: $86",
+      "[TSLA] Spot: $433.59  MaxPain: $425",
+      "[MSFT] Spot: $416.03  MaxPain: $415",
+      "[META] Spot: $612.34  MaxPain: $600",
+      "[AMZN] Spot: $265.29  MaxPain: $265",
+      "[AAPL] Spot: $308.33  MaxPain: $300",
+      "[GOOGL] Spot: $388.88  MaxPain: $388",
+      "[NVDA] Spot: $214.86  MaxPain: $220",
+      "[AVGO] Spot: $422.01  MaxPain: $415",
+      "[CRWD] Spot: $671.55  MaxPain: $638",
+      "[NFLX] Spot: $87.68  MaxPain: $89",
+      "[TSM] Spot: $412.32  MaxPain: $400",
+      "[ADBE] Spot: $240.49  MaxPain: $245",
+      "[ARM] Spot: $321.22  MaxPain: $295",
+      "[PLTR] Spot: $136.60  MaxPain: $136",
+      "[AMD] Spot: $503.89  MaxPain: $460",
+      "[INTC] Spot: $123.52  MaxPain: $117",
+      "[ORCL] Spot: $193.06  MaxPain: $188",
+      "[COIN] Spot: $180.01  MaxPain: $190",
+      "[MU] Spot: $895.88  MaxPain: $810",
+      "[APP] Spot: $514.24  MaxPain: $485",
+      "[MSTR] Spot: $159.93  MaxPain: $165",
+      "[NET] Spot: $217.54  MaxPain: $205",
+      "[RDDT] Spot: $144.64  MaxPain: $146",
+      "[DDOG] Spot: $223.65  MaxPain: $210",
+      "[GLD] Spot: $414.00  MaxPain: $415",
+      "[SLV] Spot: $69.72  MaxPain: $70",
+      "[SOFI] Spot: $15.98  MaxPain: $16",
+      "[RKLB] Spot: $143.20  MaxPain: $132",
+      "[HOOD] Spot: $74.09  MaxPain: $75",
+      "[MARA] Spot: $14.28  MaxPain: $13",
+      "[SNAP] Spot: $5.75  MaxPain: $6"
+    ],
+    "scanner_open.log": [
+      "[SPY] Spot: $750.90  MaxPain: $749",
+      "[QQQ] Spot: $732.77  MaxPain: $727",
+      "[IWM] Spot: $290.95  MaxPain: $288",
+      "[SOXL] Spot: $232.86  MaxPain: $220",
+      "[SMH] Spot: $607.00  MaxPain: $580",
+      "[IBIT] Spot: $42.50  MaxPain: $44",
+      "[GDX] Spot: $86.96  MaxPain: $86",
+      "[TSLA] Spot: $441.15  MaxPain: $428",
+      "[MSFT] Spot: $411.98  MaxPain: $415",
+      "[META] Spot: $609.76  MaxPain: $608",
+      "[AMZN] Spot: $266.21  MaxPain: $262",
+      "[AAPL] Spot: $310.21  MaxPain: $305",
+      "[GOOGL] Spot: $387.15  MaxPain: $388",
+      "[NVDA] Spot: $212.38  MaxPain: $215",
+      "[AVGO] Spot: $429.07  MaxPain: $420",
+      "[CRWD] Spot: $656.26  MaxPain: $640",
+      "[CRWV] Spot: $100.77  MaxPain: $105",
+      "[NFLX] Spot: $87.73  MaxPain: $88",
+      "[TSM] Spot: $424.01  MaxPain: $400",
+      "[ADBE] Spot: $241.75  MaxPain: $245",
+      "[ARM] Spot: $320.64  MaxPain: $300",
+      "[NOW] Spot: $101.00  MaxPain: $100",
+      "[IBM] Spot: $253.02  MaxPain: $242",
+      "[PLTR] Spot: $132.09  MaxPain: $136",
+      "[AMD] Spot: $497.60  MaxPain: $470",
+      "[INTC] Spot: $119.04  MaxPain: $115",
+      "[ORCL] Spot: $188.23  MaxPain: $188",
+      "[COIN] Spot: $178.65  MaxPain: $188",
+      "[MU] Spot: $918.10  MaxPain: $860",
+      "[APP] Spot: $537.12  MaxPain: $500",
+      "[MSTR] Spot: $155.73  MaxPain: $165",
+      "[NET] Spot: $210.95  MaxPain: $205",
+      "[RDDT] Spot: $150.64  MaxPain: $145",
+      "[DDOG] Spot: $222.80  MaxPain: $210",
+      "[ASTS] Spot: $122.67  MaxPain: $120",
+      "[IREN] Spot: $61.02  MaxPain: $58",
+      "[GLD] Spot: $405.95  MaxPain: $414",
+      "[SLV] Spot: $67.29  MaxPain: $69",
+      "[SOFI] Spot: $16.42  MaxPain: $16",
+      "[RKLB] Spot: $144.93  MaxPain: $136",
+      "[HOOD] Spot: $74.46  MaxPain: $75",
+      "[SNAP] Spot: $5.84  MaxPain: $6",
+      "[MARA] Spot: $13.85  MaxPain: $14",
+      "[SPY] Spot: $750.09  MaxPain: $749",
+      "[QQQ] Spot: $729.91  MaxPain: $727",
+      "[IWM] Spot: $291.03  MaxPain: $288",
+      "[SOXL] Spot: $221.12  MaxPain: $210",
+      "[SMH] Spot: $597.03  MaxPain: $580",
+      "[IBIT] Spot: $42.51  MaxPain: $44",
+      "[GDX] Spot: $86.60  MaxPain: $86",
+      "[TSLA] Spot: $442.27  MaxPain: $428",
+      "[MSFT] Spot: $412.44  MaxPain: $415",
+      "[META] Spot: $612.22  MaxPain: $608",
+      "[AMZN] Spot: $269.95  MaxPain: $262",
+      "[AAPL] Spot: $312.39  MaxPain: $305",
+      "[GOOGL] Spot: $392.34  MaxPain: $388",
+      "[NVDA] Spot: $210.82  MaxPain: $215",
+      "[AVGO] Spot: $426.70  MaxPain: $420",
+      "[CRWD] Spot: $645.72  MaxPain: $640",
+      "[CRWV] Spot: $102.12  MaxPain: $105",
+      "[NFLX] Spot: $87.61  MaxPain: $88",
+      "[TSM] Spot: $425.07  MaxPain: $400",
+      "[ADBE] Spot: $241.26  MaxPain: $245",
+      "[ARM] Spot: $309.00  MaxPain: $300",
+      "[NOW] Spot: $102.70  MaxPain: $100",
+      "[IBM] Spot: $256.24  MaxPain: $245",
+      "[PLTR] Spot: $133.65  MaxPain: $136",
+      "[AMD] Spot: $495.92  MaxPain: $470",
+      "[INTC] Spot: $119.32  MaxPain: $116",
+      "[ORCL] Spot: $190.21  MaxPain: $190",
+      "[COIN] Spot: $178.79  MaxPain: $188",
+      "[MU] Spot: $917.55  MaxPain: $860",
+      "[APP] Spot: $555.74  MaxPain: $505",
+      "[MSTR] Spot: $156.71  MaxPain: $165",
+      "[NET] Spot: $214.46  MaxPain: $208",
+      "[RDDT] Spot: $153.32  MaxPain: $145",
+      "[DDOG] Spot: $225.54  MaxPain: $212",
+      "[ASTS] Spot: $121.94  MaxPain: $115",
+      "[IREN] Spot: $62.62  MaxPain: $58",
+      "[GLD] Spot: $408.41  MaxPain: $414",
+      "[SLV] Spot: $67.75  MaxPain: $69",
+      "[SOFI] Spot: $16.50  MaxPain: $16",
+      "[RKLB] Spot: $142.84  MaxPain: $135",
+      "[HOOD] Spot: $75.93  MaxPain: $75",
+      "[SNAP] Spot: $5.89  MaxPain: $6",
+      "[MARA] Spot: $14.09  MaxPain: $14"
+    ]
+  },
+  "stored_snapshots": {}
+}

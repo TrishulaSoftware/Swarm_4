@@ -1,0 +1,128 @@
+{
+  "timestamp": "2026-05-29T03:21:49.468977+00:00",
+  "run_id": "20260529T032149Z",
+  "state_machine": "trishula-sovereign-orchestrator",
+  "state_machine_arn": "arn:aws:states:us-east-2:759729568430:stateMachine:trishula-sovereign-orchestrator",
+  "execution_arn": "arn:aws:states:us-east-2:759729568430:execution:trishula-sovereign-orchestrator:test-phase3-20260529T032149Z",
+  "final_status": "SUCCEEDED",
+  "final_output": "{\"source\":\"manual_test\",\"run_id\":\"20260529T032149Z\",\"phase\":\"3\",\"symbol\":\"NVDA\",\"sweep\":\"phase3_integration_test\",\"timestamp\":\"2026-05-29T03:21:49.468977+00:00\",\"initiated_by\":\"setup_orchestrator_v2\",\"gcp_trigger_result\":{\"payload\":{\"statusCode\":200,\"body\":\"{\\\"status\\\": \\\"ARMED\\\", \\\"time\\\": \\\"2026-05-29T03:21:59.685605+00:00\\\"}\"},\"statusCode\":200},\"lambda_result\":{\"payload\":{\"statusCode\":200,\"body\":\"{\\\"status\\\": \\\"ARMED\\\", \\\"time\\\": \\\"2026-05-29T03:21:59.840925+00:00\\\"}\"},\"statusCode\":200},\"sns_error\":{\"Error\":\"SNS.AuthorizationErrorException\",\"Cause\":\"User: arn:aws:sts::759729568430:assumed-role/trishula-stepfunctions-role/kZGbAhOzectodOcTpbXPzEmQzpowVKaD is not authorized to perform: SNS:Publish on resource: arn:aws:sns:us-east-2:759729568430:trishula-discord-alerts because no identity-based policy allows the SNS:Publish action (Service: AmazonSNS; Status Code: 403; Error Code: AuthorizationError; Request ID: e82345ef-c65d-422c-a286-2434fe8c5197; Proxy: null)\"},\"oracle_result\":{\"ExecutedVersion\":\"$LATEST\",\"Payload\":{\"statusCode\":200,\"body\":\"{\\\"status\\\": \\\"ARMED\\\", \\\"time\\\": \\\"2026-05-29T03:22:00.201268+00:00\\\"}\"},\"SdkHttpMetadata\":{\"AllHttpHeaders\":{\"X-Amz-Executed-Version\":[\"$LATEST\"],\"x-amzn-Remapped-Content-Length\":[\"0\"],\"Connection\":[\"keep-alive\"],\"x-amzn-RequestId\":[\"0af7169e-dee5-4d6f-b24c-fd231162d104\"],\"Content-Length\":[\"102\"],\"Date\":[\"Fri, 29 May 2026 03:22:00 GMT\"],\"X-Amzn-Trace-Id\":[\"Root=1-6a190658-1397b7f249e31a6400f5c927;Parent=73428a3ff43ff09b;Sampled=0;Lineage=1:47a43b05:0\"],\"Content-Type\":[\"application/json\"]},\"HttpHeaders\":{\"Connection\":\"keep-alive\",\"Content-Length\":\"102\",\"Content-Type\":\"application/json\",\"Date\":\"Fri, 29 May 2026 03:22:00 GMT\",\"X-Amz-Executed-Version\":\"$LATEST\",\"x-amzn-Remapped-Content-Length\":\"0\",\"x-amzn-RequestId\":\"0af7169e-dee5-4d6f-b24c-fd231162d104\",\"X-Amzn-Trace-Id\":\"Root=1-6a190658-1397b7f249e31a6400f5c927;Parent=73428a3ff43ff09b;Sampled=0;Lineage=1:47a43b05:0\"},\"HttpStatusCode\":200},\"SdkResponseMetadata\":{\"RequestId\":\"0af7169e-dee5-4d6f-b24c-fd231162d104\"},\"StatusCode\":200}}",
+  "states_defined": [
+    "TriggerGCPPubSub",
+    "GCPTriggerFailed",
+    "LambdaHealthMonitor",
+    "LambdaHealthFailed",
+    "EvaluateHealth",
+    "NotifyDiscordSuccess",
+    "NotifyDiscordFailure",
+    "WriteOracleAuditRecord",
+    "OrchestratorSuccess",
+    "OrchestratorFailed"
+  ],
+  "events_count": 26,
+  "events_log": [
+    {
+      "type": "ExecutionStarted",
+      "timestamp": "2026-05-28 23:21:59.113000-04:00"
+    },
+    {
+      "type": "TaskStateEntered",
+      "timestamp": "2026-05-28 23:21:59.157000-04:00"
+    },
+    {
+      "type": "TaskScheduled",
+      "timestamp": "2026-05-28 23:21:59.157000-04:00"
+    },
+    {
+      "type": "TaskStarted",
+      "timestamp": "2026-05-28 23:21:59.214000-04:00"
+    },
+    {
+      "type": "TaskSucceeded",
+      "timestamp": "2026-05-28 23:21:59.692000-04:00"
+    },
+    {
+      "type": "TaskStateExited",
+      "timestamp": "2026-05-28 23:21:59.745000-04:00"
+    },
+    {
+      "type": "TaskStateEntered",
+      "timestamp": "2026-05-28 23:21:59.745000-04:00"
+    },
+    {
+      "type": "TaskScheduled",
+      "timestamp": "2026-05-28 23:21:59.745000-04:00"
+    },
+    {
+      "type": "TaskStarted",
+      "timestamp": "2026-05-28 23:21:59.788000-04:00"
+    },
+    {
+      "type": "TaskSucceeded",
+      "timestamp": "2026-05-28 23:21:59.847000-04:00"
+    },
+    {
+      "type": "TaskStateExited",
+      "timestamp": "2026-05-28 23:21:59.877000-04:00"
+    },
+    {
+      "type": "ChoiceStateEntered",
+      "timestamp": "2026-05-28 23:21:59.877000-04:00"
+    },
+    {
+      "type": "ChoiceStateExited",
+      "timestamp": "2026-05-28 23:21:59.877000-04:00"
+    },
+    {
+      "type": "TaskStateEntered",
+      "timestamp": "2026-05-28 23:21:59.877000-04:00"
+    },
+    {
+      "type": "TaskScheduled",
+      "timestamp": "2026-05-28 23:21:59.877000-04:00"
+    },
+    {
+      "type": "TaskStarted",
+      "timestamp": "2026-05-28 23:21:59.984000-04:00"
+    },
+    {
+      "type": "TaskFailed",
+      "timestamp": "2026-05-28 23:22:00.047000-04:00"
+    },
+    {
+      "type": "TaskStateExited",
+      "timestamp": "2026-05-28 23:22:00.110000-04:00"
+    },
+    {
+      "type": "TaskStateEntered",
+      "timestamp": "2026-05-28 23:22:00.110000-04:00"
+    },
+    {
+      "type": "TaskScheduled",
+      "timestamp": "2026-05-28 23:22:00.110000-04:00"
+    },
+    {
+      "type": "TaskStarted",
+      "timestamp": "2026-05-28 23:22:00.158000-04:00"
+    },
+    {
+      "type": "TaskSucceeded",
+      "timestamp": "2026-05-28 23:22:00.209000-04:00"
+    },
+    {
+      "type": "TaskStateExited",
+      "timestamp": "2026-05-28 23:22:00.233000-04:00"
+    },
+    {
+      "type": "SucceedStateEntered",
+      "timestamp": "2026-05-28 23:22:00.233000-04:00"
+    },
+    {
+      "type": "SucceedStateExited",
+      "timestamp": "2026-05-28 23:22:00.233000-04:00"
+    },
+    {
+      "type": "ExecutionSucceeded",
+      "timestamp": "2026-05-28 23:22:00.257000-04:00"
+    }
+  ]
+}

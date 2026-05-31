@@ -1,0 +1,312 @@
+{
+  "sent": 61,
+  "failed": 0,
+  "entries": [
+    {
+      "to": "Dimillian@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in Dimillian/MovieSwiftUI",
+      "ts": "2026-04-29T17:49:47.560927+00:00"
+    },
+    {
+      "to": "Shabinder@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in Shabinder/SpotiFlyer",
+      "ts": "2026-04-29T17:49:49.562082+00:00"
+    },
+    {
+      "to": "practicajs@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in practicajs/practica",
+      "ts": "2026-04-29T17:49:51.563074+00:00"
+    },
+    {
+      "to": "koide3@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in koide3/ndt_omp",
+      "ts": "2026-04-29T17:49:53.563683+00:00"
+    },
+    {
+      "to": "bdring@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in bdring/FluidNC",
+      "ts": "2026-04-29T17:49:55.564428+00:00"
+    },
+    {
+      "to": "danvick@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in danvick/flutter_chips_input",
+      "ts": "2026-04-29T17:49:57.565348+00:00"
+    },
+    {
+      "to": "zpl-c@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in zpl-c/enet",
+      "ts": "2026-04-29T17:49:59.566069+00:00"
+    },
+    {
+      "to": "mghoneimy@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in mghoneimy/php-graphql-client",
+      "ts": "2026-04-29T17:50:01.567116+00:00"
+    },
+    {
+      "to": "microsoft@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in microsoft/pxt-blockly",
+      "ts": "2026-04-29T17:50:03.568061+00:00"
+    },
+    {
+      "to": "Chibogs@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in Chibogs/bullseye-tensorflow-model",
+      "ts": "2026-04-29T17:50:05.569079+00:00"
+    },
+    {
+      "to": "kssteven418@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in kssteven418/LTP",
+      "ts": "2026-04-29T17:50:07.569949+00:00"
+    },
+    {
+      "to": "aliyilmazco@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in aliyilmazco/php_admin_page_example",
+      "ts": "2026-04-29T17:50:09.571230+00:00"
+    },
+    {
+      "to": "kpu@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in kpu/kenlm",
+      "ts": "2026-04-29T17:50:11.572093+00:00"
+    },
+    {
+      "to": "8212369@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in 8212369/SDL",
+      "ts": "2026-04-29T17:50:13.572740+00:00"
+    },
+    {
+      "to": "ehang-io@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in ehang-io/nps-web",
+      "ts": "2026-04-29T17:50:15.573479+00:00"
+    },
+    {
+      "to": "LeenAlnajjar@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in LeenAlnajjar/Kinesisstream",
+      "ts": "2026-04-29T17:50:17.574305+00:00"
+    },
+    {
+      "to": "Punkrock84@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in Punkrock84/The-Pico-SDK",
+      "ts": "2026-04-29T17:50:19.575259+00:00"
+    },
+    {
+      "to": "da03@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in da03/hierarchical_diffusion_LM",
+      "ts": "2026-04-29T17:50:21.576285+00:00"
+    },
+    {
+      "to": "MallteamDev@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in MallteamDev/KivyMD",
+      "ts": "2026-04-29T17:50:23.577326+00:00"
+    },
+    {
+      "to": "brunopgalvao@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in brunopgalvao/substrate-contracts-template",
+      "ts": "2026-04-29T17:50:25.578077+00:00"
+    },
+    {
+      "to": "Tinywan@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in Tinywan/dnmp",
+      "ts": "2026-04-29T17:50:27.578688+00:00"
+    },
+    {
+      "to": "richtabor@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in richtabor/iceberg",
+      "ts": "2026-04-29T17:50:29.579686+00:00"
+    },
+    {
+      "to": "TheAlgorithms@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in TheAlgorithms/AArch64_Assembly",
+      "ts": "2026-04-29T17:50:31.580719+00:00"
+    },
+    {
+      "to": "openharmony@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in openharmony/third_party_rust_termcolor",
+      "ts": "2026-04-29T17:50:33.581270+00:00"
+    },
+    {
+      "to": "nolangrossi@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in nolangrossi/github-actions-test",
+      "ts": "2026-04-29T17:50:35.582060+00:00"
+    },
+    {
+      "to": "haproxytech@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in haproxytech/haproxy-dev-lua-filters",
+      "ts": "2026-04-29T17:50:37.582786+00:00"
+    },
+    {
+      "to": "reynolds9808@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in reynolds9808/transformers_backdoor_attack",
+      "ts": "2026-04-29T17:50:39.583714+00:00"
+    },
+    {
+      "to": "ST10437911@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in ST10437911/Automated_Testing",
+      "ts": "2026-04-29T17:50:41.584292+00:00"
+    },
+    {
+      "to": "ithebest@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in ithebest/flutter_file_picker",
+      "ts": "2026-04-29T17:50:43.584983+00:00"
+    },
+    {
+      "to": "ermolaev1337@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in ermolaev1337/next-docker",
+      "ts": "2026-04-29T17:50:45.585661+00:00"
+    },
+    {
+      "to": "su-u@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in su-u/git",
+      "ts": "2026-04-29T17:50:47.586386+00:00"
+    },
+    {
+      "to": "sagpant@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in sagpant/imgui",
+      "ts": "2026-04-29T17:50:49.587400+00:00"
+    },
+    {
+      "to": "ReversePath@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in ReversePath/Reddit",
+      "ts": "2026-04-29T17:50:51.588552+00:00"
+    },
+    {
+      "to": "github@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in github/textarea-autosize",
+      "ts": "2026-04-29T17:50:53.589244+00:00"
+    },
+    {
+      "to": "github-linguist@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in github-linguist/linguist",
+      "ts": "2026-04-29T17:50:55.590052+00:00"
+    },
+    {
+      "to": "xinthink@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in xinthink/flutter-keep",
+      "ts": "2026-04-29T17:50:57.591662+00:00"
+    },
+    {
+      "to": "anyproto@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in anyproto/anytype-ts",
+      "ts": "2026-04-29T17:50:59.592532+00:00"
+    },
+    {
+      "to": "phodal@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in phodal/quake",
+      "ts": "2026-04-29T17:51:01.593487+00:00"
+    },
+    {
+      "to": "coatk1@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in coatk1/my-docker",
+      "ts": "2026-04-29T17:51:03.594218+00:00"
+    },
+    {
+      "to": "cadence-workflow@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in cadence-workflow/cadence-web",
+      "ts": "2026-04-29T17:51:05.594947+00:00"
+    },
+    {
+      "to": "archerysec@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in archerysec/archerysec",
+      "ts": "2026-04-29T17:51:07.595737+00:00"
+    },
+    {
+      "to": "forkcms@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in forkcms/forkcms",
+      "ts": "2026-04-29T17:51:09.596422+00:00"
+    },
+    {
+      "to": "nlextract@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in nlextract/NLExtract",
+      "ts": "2026-04-29T17:51:11.597471+00:00"
+    },
+    {
+      "to": "devshawn@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in devshawn/kafka-gitops",
+      "ts": "2026-04-29T17:51:13.598413+00:00"
+    },
+    {
+      "to": "chop-dbhi@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in chop-dbhi/prometheus-sql",
+      "ts": "2026-04-29T17:51:15.599242+00:00"
+    },
+    {
+      "to": "StarEliteCore@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in StarEliteCore/Nebula.Admin",
+      "ts": "2026-04-29T17:51:17.599869+00:00"
+    },
+    {
+      "to": "esys@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in esys/workshop-hello-gitops",
+      "ts": "2026-04-29T17:51:19.600413+00:00"
+    },
+    {
+      "to": "bitquest@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in bitquest/bitquest",
+      "ts": "2026-04-29T17:51:21.601019+00:00"
+    },
+    {
+      "to": "thenewboston-blockchain@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in thenewboston-blockchain/Bank",
+      "ts": "2026-04-29T17:51:23.601805+00:00"
+    },
+    {
+      "to": "digital-divas@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in digital-divas/IP-Camera-Mock",
+      "ts": "2026-04-29T17:51:25.602493+00:00"
+    },
+    {
+      "to": "webclinic017@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in webclinic017/smu-goldman-hackathon",
+      "ts": "2026-04-29T17:51:27.603338+00:00"
+    },
+    {
+      "to": "picostack@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in picostack/pico",
+      "ts": "2026-04-29T17:51:29.604248+00:00"
+    },
+    {
+      "to": "helium@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in helium/router",
+      "ts": "2026-04-29T17:51:31.605153+00:00"
+    },
+    {
+      "to": "Aadarshprajapati777@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in Aadarshprajapati777/data_engineering_ELT_fullstack_application",
+      "ts": "2026-04-29T17:51:33.606006+00:00"
+    },
+    {
+      "to": "chat21@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in chat21/chat21-rabbitmq",
+      "ts": "2026-04-29T17:51:35.606881+00:00"
+    },
+    {
+      "to": "cnieg@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in cnieg/samba-config-kube-pvc",
+      "ts": "2026-04-29T17:51:37.607791+00:00"
+    },
+    {
+      "to": "DemonicMushy@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in DemonicMushy/decoder_agent",
+      "ts": "2026-04-29T17:51:39.609033+00:00"
+    },
+    {
+      "to": "codex-team@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in codex-team/task-manager",
+      "ts": "2026-04-29T17:51:41.609980+00:00"
+    },
+    {
+      "to": "ComposableFi@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in ComposableFi/composable-ibc",
+      "ts": "2026-04-29T17:51:43.610415+00:00"
+    },
+    {
+      "to": "crustio@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in crustio/crust-apps",
+      "ts": "2026-04-29T17:51:45.611022+00:00"
+    },
+    {
+      "to": "WilcoPartsUnlimited@github.com",
+      "subject": "Critical CI/CD Vulnerability Detected in WilcoPartsUnlimited/Parts-Unlimited-kDKer",
+      "ts": "2026-04-29T17:51:47.611760+00:00"
+    }
+  ],
+  "timestamp": "2026-04-29T17:51:49.611999+00:00"
+}

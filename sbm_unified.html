@@ -1,0 +1,232 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Trishula SBM — Unified Intel</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d1117;color:#e6edf3;font-family:'Inter',sans-serif;padding:20px}
+h1{font-size:1.4rem;font-weight:900}
+.sub{color:#8b949e;font-size:.78rem;margin-bottom:16px}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:6px 16px;border-radius:6px;border:1px solid #30363d;background:#161b22;color:#8b949e;cursor:pointer;font-size:.78rem;font-weight:600}
+.tab.active{background:#238636;border-color:#2ea043;color:#fff}
+.sport-tabs{display:flex;gap:6px;margin-bottom:20px}
+.stab{padding:5px 14px;border-radius:20px;border:1px solid #30363d;background:transparent;color:#8b949e;cursor:pointer;font-size:.75rem;font-weight:700;letter-spacing:.5px}
+.stab.active{background:#1f6feb;border-color:#388bfd;color:#fff}
+.filters{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.fbtn{padding:4px 12px;border-radius:4px;border:1px solid #30363d;background:transparent;color:#8b949e;cursor:pointer;font-size:.72rem;font-weight:600}
+.fbtn.on{background:#f0c04022;border-color:#f0c040;color:#f0c040}
+.stats{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.sbox{background:#161b22;border:1px solid #21262d;border-radius:8px;padding:10px 16px;flex:1;min-width:90px}
+.sbox .v{font-size:1.3rem;font-weight:900}.sbox .l{font-size:.68rem;color:#8b949e}
+table{width:100%;border-collapse:collapse}
+th{padding:8px 10px;text-align:left;font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8b949e;border-bottom:1px solid #21262d;cursor:pointer;white-space:nowrap}
+th:hover{color:#e6edf3}
+td{padding:8px 10px;font-size:.8rem;border-bottom:1px solid #161b22;vertical-align:middle}
+tr:hover td{background:#161b22}
+.pname{font-weight:700;color:#fff}
+.tm{font-size:.68rem;font-weight:700;color:#8b949e;letter-spacing:.5px}
+.mu{font-size:.7rem;color:#8b949e}
+.pos{color:#3fb950;font-weight:600}.neg{color:#ff7b72;font-weight:600}
+.c{text-align:center}
+.score{font-weight:900;font-size:.9rem;padding:3px 8px;border-radius:4px}
+.s-elite{background:#f0c04022;color:#f0c040}
+.s-high{background:#3fb95022;color:#3fb950}
+.s-mid{background:#388bfd22;color:#388bfd}
+.s-low{background:#8b949e22;color:#8b949e}
+.pbar{display:flex;gap:2px;align-items:center}
+.dot{width:7px;height:14px;border-radius:2px}
+.dot-h{background:#3fb950}.dot-m{background:#8b949e22}
+.grade{font-size:.72rem;font-weight:700;padding:2px 6px;border-radius:3px}
+.gA{background:#3fb95022;color:#3fb950}
+.gB{background:#388bfd22;color:#388bfd}
+.gC{background:#f0c04022;color:#f0c040}
+.gD{background:#ff7b7222;color:#ff7b72}
+.edge-pos{color:#3fb950;font-weight:700}
+.edge-neg{color:#ff7b72;font-weight:700}
+.edge-zero{color:#8b949e}
+.badge{display:inline-block;font-size:.6rem;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:4px}
+.b100{background:#f0c04022;color:#f0c040}
+.bhot{background:#3fb95022;color:#3fb950}
+.tag100{background:#f0c040;color:#000;padding:2px 6px;border-radius:3px;font-size:.65rem;font-weight:900}
+.taghot{background:#3fb950;color:#000;padding:2px 6px;border-radius:3px;font-size:.65rem;font-weight:900}
+</style></head><body>
+<h1>🗡️ Trishula SBM — Unified Intelligence Dashboard</h1>
+<p class="sub">Multi-Source MLB Prop Analysis · Over 0.5 Hits · Cross-Referenced</p>
+<div class="sport-tabs">
+  <button class="stab active">⚾ MLB</button>
+  <button class="stab">🏀 NBA</button>
+  <button class="stab">🏈 NFL</button>
+  <button class="stab">+ Add Sport</button>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="showTab('combined')">🔥 Combined Intel</button>
+  <button class="tab" onclick="showTab('streak')">📊 Streak Sheet</button>
+  <button class="tab" onclick="showTab('props')">📈 Prop Lines</button>
+  <button class="tab" onclick="showTab('h2h')">⚔️ H2H Leaders</button>
+</div>
+<div class="filters">
+  <span style="font-size:.72rem;color:#8b949e;padding:4px 0">Filter:</span>
+  <button class="fbtn" onclick="toggleFilter(this,'f100')">100% Streak</button>
+  <button class="fbtn" onclick="toggleFilter(this,'fhot')">Hot Streak</button>
+  <button class="fbtn" onclick="toggleFilter(this,'fedge')">+Edge Only</button>
+  <button class="fbtn" onclick="toggleFilter(this,'fh2h')">H2H 80%+</button>
+  <button class="fbtn" onclick="toggleFilter(this,'felite')">Elite Score 80+</button>
+</div>
+<div class="stats" id="statsRow"></div>
+<div id="tableArea"></div>
+
+<script>
+const D=[
+ {p:"Elly De La Cruz",tm:"CIN",pos:"IF",ha:"@",opp:"CLE",odds:"-197",rPct:100,rStr:"9/L9",s26:79,s25:71,con:10,h2h:78,matchup:"B-",edge:0.1},
+ {p:"Miguel Vargas",tm:"CWS",pos:"IF",ha:"vs",opp:"CHC",odds:"-230",rPct:100,rStr:"8/L8",s26:67,s25:58,con:9,h2h:78,matchup:"B",edge:0.1},
+ {p:"Alec Bohm",tm:"PHI",pos:"IF",ha:"@",opp:"PIT",odds:"-185",rPct:100,rStr:"7/L7",s26:53,s25:75,con:8,h2h:78,matchup:"C+",edge:0.1},
+ {p:"Spencer Steer",tm:"CIN",pos:"OF",ha:"@",opp:"CLE",odds:"-176",rPct:100,rStr:"7/L7",s26:71,s25:60,con:8,h2h:89,matchup:"B-",edge:0.1},
+ {p:"Jake Bauers",tm:"MIL",pos:"IF",ha:"@",opp:"MIN",odds:"-157",rPct:100,rStr:"7/L7",s26:66,s25:39,con:8,h2h:67,matchup:"B-",edge:0.1},
+ {p:"Riley Greene",tm:"DET",pos:"OF",ha:"vs",opp:"TOR",odds:"-193",rPct:100,rStr:"11/L11",s26:72,s25:59,con:0,h2h:60,matchup:"C",edge:0.1},
+ {p:"Taylor Walls",tm:"TB",pos:"IF",ha:"vs",opp:"MIA",odds:"+108",rPct:100,rStr:"5/L5",s26:58,s25:55,con:6,h2h:75,matchup:"D",edge:-0.1},
+ {p:"Brett Baty",tm:"NYM",pos:"OF",ha:"vs",opp:"NYY",odds:"-181",rPct:100,rStr:"5/L5",s26:53,s25:56,con:6,h2h:75,matchup:"C",edge:0.1},
+ {p:"Alex Bregman",tm:"CHC",pos:"IF",ha:"@",opp:"CWS",odds:"-225",rPct:100,rStr:"5/L5",s26:70,s25:67,con:6,h2h:70,matchup:"B-",edge:0.1},
+ {p:"Kody Clemens",tm:"MIN",pos:"IF",ha:"vs",opp:"MIL",odds:"-164",rPct:100,rStr:"5/L5",s26:56,s25:47,con:6,h2h:67,matchup:"C",edge:0.1},
+ {p:"Josh Naylor",tm:"SEA",pos:"IF",ha:"vs",opp:"SD",odds:"-190",rPct:100,rStr:"5/L5",s26:64,s25:75,con:5,h2h:71,matchup:"B",edge:0.1},
+ {p:"Angel Martinez",tm:"CLE",pos:"OF",ha:"vs",opp:"CIN",odds:"-205",rPct:100,rStr:"4/L4",s26:57,s25:56,con:6,h2h:88,matchup:"C+",edge:0.1},
+ {p:"Konnor Griffin",tm:"PIT",pos:"IF",ha:"vs",opp:"PHI",odds:"-176",rPct:100,rStr:"4/L4",s26:68,s25:0,con:5,h2h:100,matchup:"D+",edge:0.1},
+ {p:"Samuel Basallo",tm:"BAL",pos:"C",ha:"@",opp:"WSH",odds:"-250",rPct:90,rStr:"9/L10",s26:65,s25:52,con:10,h2h:100,matchup:"C+",edge:0.2},
+ {p:"Brandon Marsh",tm:"PHI",pos:"OF",ha:"@",opp:"PIT",odds:"-190",rPct:94,rStr:"16/L17",s26:81,s25:54,con:4,h2h:63,matchup:"B-",edge:0.1},
+ {p:"Braden Shewmake",tm:"HOU",pos:"IF",ha:"vs",opp:"TEX",odds:"-150",rPct:90,rStr:"9/L10",s26:80,s25:0,con:1,h2h:67,matchup:"B",edge:0.1},
+ {p:"Randy Arozarena",tm:"SEA",pos:"OF",ha:"vs",opp:"SD",odds:"-160",rPct:90,rStr:"9/L10",s26:70,s25:60,con:2,h2h:91,matchup:"B-",edge:0.1},
+ {p:"Spencer Horwitz",tm:"PIT",pos:"IF",ha:"vs",opp:"PHI",odds:"-164",rPct:89,rStr:"8/L9",s26:62,s25:61,con:3,h2h:60,matchup:"B",edge:0.1},
+ {p:"Nick Fortes",tm:"TB",pos:"C",ha:"vs",opp:"MIA",odds:"-134",rPct:86,rStr:"6/L7",s26:72,s25:45,con:2,h2h:67,matchup:"B-",edge:0.0},
+];
+
+function gradeScore(g){return{A:95,"A-":90,"B+":87,B:83,"B-":80,"C+":77,C:73,"C-":70,"D+":67,D:63,"D-":60}[g]||65}
+function composite(d){return Math.round(d.rPct*.35+d.s26*.25+d.h2h*.25+gradeScore(d.matchup)*.15+(d.edge>0?3:0))}
+function scoreClass(s){return s>=85?'s-elite':s>=75?'s-high':s>=65?'s-mid':'s-low'}
+function gradeClass(g){return g.startsWith('A')?'gA':g.startsWith('B')?'gB':g.startsWith('C')?'gC':'gD'}
+function oddsHtml(o){return`<span class="${o[0]=='+'?'pos':'neg'}">${o}</span>`}
+function miniBar(n){let h='<div class="pbar">';for(let i=0;i<n;i++)h+=`<div class="dot dot-h"></div>`;h+='</div>';return h}
+
+let activeFilters=new Set(),sortCol='score',sortAsc=false,currentTab='combined';
+
+function toggleFilter(btn,f){
+  if(activeFilters.has(f)){activeFilters.delete(f);btn.classList.remove('on')}
+  else{activeFilters.add(f);btn.classList.add('on')}
+  renderTable();
+}
+
+function applyFilters(data){
+  return data.filter(d=>{
+    const s=composite(d);
+    if(activeFilters.has('f100')&&d.rPct<100)return false;
+    if(activeFilters.has('fhot')&&(d.rPct>=100||d.rPct<83))return false;
+    if(activeFilters.has('fedge')&&d.edge<=0)return false;
+    if(activeFilters.has('fh2h')&&d.h2h<80)return false;
+    if(activeFilters.has('felite')&&s<80)return false;
+    return true;
+  });
+}
+
+function sortData(data){
+  return data.sort((a,b)=>{
+    let va,vb;
+    if(sortCol==='score'){va=composite(a);vb=composite(b)}
+    else if(sortCol==='rPct'){va=a.rPct;vb=b.rPct}
+    else if(sortCol==='s26'){va=a.s26;vb=b.s26}
+    else if(sortCol==='h2h'){va=a.h2h;vb=b.h2h}
+    else if(sortCol==='con'){va=a.con;vb=b.con}
+    else if(sortCol==='edge'){va=a.edge;vb=b.edge}
+    else{va=a[sortCol];vb=b[sortCol]}
+    return sortAsc?va-vb:vb-va;
+  });
+}
+
+function setSort(col){sortAsc=sortCol===col?!sortAsc:false;sortCol=col;renderTable()}
+
+function renderStats(data){
+  const p100=data.filter(d=>d.rPct===100).length;
+  const hot=data.filter(d=>d.rPct<100&&d.rPct>=83).length;
+  const best=data.reduce((b,d)=>composite(d)>b?composite(d):b,0);
+  document.getElementById('statsRow').innerHTML=`
+  <div class="sbox"><div class="v" style="color:#f0c040">${p100}</div><div class="l">100% Streak</div></div>
+  <div class="sbox"><div class="v" style="color:#3fb950">${hot}</div><div class="l">Hot Streak</div></div>
+  <div class="sbox"><div class="v" style="color:#58a6ff">${data.length}</div><div class="l">Total Players</div></div>
+  <div class="sbox"><div class="v" style="color:#f0c040">${best}</div><div class="l">Top Score</div></div>`;
+}
+
+function renderCombined(data){
+  const sorted=sortData([...data]);
+  const arr=h=>{const s=sortCol===h;return s?(sortAsc?'▲':'▼'):''};
+  let rows=sorted.map((d,i)=>{
+    const s=composite(d);
+    const badge=d.rPct===100?'<span class="tag100">100%</span>':'<span class="taghot">HOT</span>';
+    return`<tr>
+      <td style="color:#8b949e;font-size:.72rem">${i+1}</td>
+      <td><span class="tm">${d.tm}</span></td>
+      <td><span class="pname">${d.p}</span> ${badge}<br><span class="mu">${d.ha} ${d.opp}</span></td>
+      <td>${oddsHtml(d.odds)}</td>
+      <td class="c" style="color:${d.rPct===100?'#f0c040':'#3fb950'};font-weight:800">${d.rPct}%</td>
+      <td class="c" style="color:#8b949e">${d.rStr}</td>
+      <td class="c">${miniBar(d.con)}</td>
+      <td class="c" style="color:${d.s26>=70?'#3fb950':d.s26>=55?'#e6edf3':'#ff7b72'};font-weight:600">${d.s26}%</td>
+      <td class="c" style="color:${d.h2h>=85?'#f0c040':d.h2h>=70?'#3fb950':'#8b949e'};font-weight:600">${d.h2h}%</td>
+      <td class="c"><span class="grade ${gradeClass(d.matchup)}">${d.matchup}</span></td>
+      <td class="c ${d.edge>0?'edge-pos':d.edge<0?'edge-neg':'edge-zero'}">${d.edge>0?'+':''}${d.edge.toFixed(1)}</td>
+      <td class="c"><span class="score ${scoreClass(s)}">${s}</span></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('tableArea').innerHTML=`<table>
+    <thead><tr>
+      <th>#</th><th>TM</th><th>Player</th><th>Odds</th>
+      <th onclick="setSort('rPct')" class="c">Recent% ${arr('rPct')}</th>
+      <th class="c">Streak</th>
+      <th onclick="setSort('con')" class="c">Consec ${arr('con')}</th>
+      <th onclick="setSort('s26')" class="c">2026% ${arr('s26')}</th>
+      <th onclick="setSort('h2h')" class="c">H2H% ${arr('h2h')}</th>
+      <th class="c">Matchup</th>
+      <th onclick="setSort('edge')" class="c">Edge ${arr('edge')}</th>
+      <th onclick="setSort('score')" class="c">Score ${arr('score')}</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+function showTab(tab){
+  currentTab=tab;
+  document.querySelectorAll('.tab').forEach((t,i)=>{
+    t.classList.toggle('active',['combined','streak','props','h2h'][i]===tab);
+  });
+  renderTable();
+}
+
+function renderTable(){
+  let data=applyFilters([...D]);
+  renderStats(data);
+  if(currentTab==='h2h'){data=data.sort((a,b)=>b.h2h-a.h2h)}
+  else if(currentTab==='streak'){data=data.sort((a,b)=>b.rPct-a.rPct||b.con-a.con)}
+  else if(currentTab==='props'){data=data.sort((a,b)=>b.s26-a.s26)}
+  else{renderCombined(data);return}
+  // Simple view for other tabs
+  const rows=data.map((d,i)=>{
+    const s=composite(d);
+    return`<tr>
+      <td style="color:#8b949e;font-size:.72rem">${i+1}</td>
+      <td><span class="tm">${d.tm}</span></td>
+      <td><span class="pname">${d.p}</span><br><span class="mu">${d.ha} ${d.opp}</span></td>
+      <td>${oddsHtml(d.odds)}</td>
+      <td class="c" style="color:${d.rPct===100?'#f0c040':'#3fb950'};font-weight:800">${d.rPct}%</td>
+      <td class="c">${d.rStr}</td>
+      <td class="c" style="color:${d.s26>=70?'#3fb950':d.s26>=55?'#e6edf3':'#ff7b72'}">${d.s26}%</td>
+      <td class="c" style="color:${d.h2h>=85?'#f0c040':d.h2h>=70?'#3fb950':'#8b949e'};font-weight:600">${d.h2h}%</td>
+      <td class="c"><span class="grade ${gradeClass(d.matchup)}">${d.matchup}</span></td>
+      <td class="c ${d.edge>0?'edge-pos':d.edge<0?'edge-neg':'edge-zero'}">${d.edge>0?'+':''}${d.edge.toFixed(1)}</td>
+      <td class="c"><span class="score ${scoreClass(s)}">${s}</span></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('tableArea').innerHTML=`<table>
+    <thead><tr><th>#</th><th>TM</th><th>Player</th><th>Odds</th>
+    <th class="c">Recent%</th><th class="c">Streak</th>
+    <th class="c">2026%</th><th class="c">H2H%</th>
+    <th class="c">Matchup</th><th class="c">Edge</th><th class="c">Score</th>
+    </tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+renderTable();
+</script></body></html>

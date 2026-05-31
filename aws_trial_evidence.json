@@ -1,0 +1,22 @@
+{
+  "forecast_activated": "2026-05-27T00:29:44.531529+00:00",
+  "sagemaker_activated": "2026-05-27T00:29:44.531529+00:00",
+  "kill_lambda_arn": "arn:aws:lambda:us-east-2:759729568430:function:trishula-trial-killshot",
+  "kill_rules": [
+    "trishula-forecast-hardkill",
+    "trishula-sagemaker-hardkill"
+  ],
+  "iac_file": "H:\\Trishula\\Swarm_4_Integration\\Salvo_Staging\\aws_trial_killswitch.py",
+  "forecast_status": "LIVE",
+  "sagemaker_status": "LIVE",
+  "account_hold_clears": "2026-05-26T20:00:00-04:00",
+  "note": "Kill dates will be reset after actual activation tomorrow",
+  "sagemaker_kill_date": "2026-07-26T00:29:44.531529+00:00",
+  "sagemaker_region": "us-east-1",
+  "last_updated": "2026-05-27T00:29:44.531529+00:00",
+  "polly_status": "LIVE",
+  "lex_status": "LIVE",
+  "forecast_kill_date": "2026-08-25T00:29:44.531529+00:00",
+  "forecast_kill_date_human": "2026-08-25",
+  "step_functions_status": "LIVE"
+}

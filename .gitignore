@@ -1,0 +1,39 @@
+﻿# Secrets â€” never commit
+.env
+*.env
+oracle_wallet/
+oracle_wallet2/
+trishula-gcp-key.json
+*.json.key
+*credentials*
+
+# Logs
+logs/
+*.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Local scratch
+scratch/
+*.tmp
+
+# Sensitive infra/test scripts with hardcoded keys
+_test_azure_f0.py
+_test_cosmos.py
+_attach_aws_policies.py
+aws_fix_iam.py
+aws_provision_infra.py
+comprehend_nlp.py
+scratch_polygon_test.py
+ml_training_data.csv
+ml_features.csv
+ml_raw_snapshots.json
+autopilot_config.json
+ml_monitor_log.json
+*.csv
+*.json

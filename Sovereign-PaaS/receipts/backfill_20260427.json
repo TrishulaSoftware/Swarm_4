@@ -1,0 +1,16 @@
+[
+  {"id": "backfill_001", "operation": "SMTP Gateway wiring (social_daemon.py)", "timestamp": "2026-04-21T22:00:00Z", "status": "COMPLETED", "backfill": true, "backfill_date": "2026-04-27T03:27:00Z"},
+  {"id": "backfill_002", "operation": "51-target outreach queue creation", "timestamp": "2026-04-21T23:00:00Z", "status": "COMPLETED", "backfill": true, "backfill_date": "2026-04-27T03:27:00Z"},
+  {"id": "backfill_003", "operation": "Outreach Wave 1 dispatch (10 emails)", "timestamp": "2026-04-22T01:00:00Z", "status": "COMPLETED", "backfill": true, "backfill_date": "2026-04-27T03:27:00Z"},
+  {"id": "backfill_004", "operation": "trishula-cicd-remediation GitHub push", "timestamp": "2026-04-22T02:00:00Z", "status": "COMPLETED", "backfill": true, "backfill_date": "2026-04-27T03:27:00Z"},
+  {"id": "backfill_005", "operation": "trishula-pqc-identity GitHub push", "timestamp": "2026-04-22T02:15:00Z", "status": "COMPLETED", "backfill": true, "backfill_date": "2026-04-27T03:27:00Z"},
+  {"id": "backfill_006", "operation": "trishula-raas GitHub push", "timestamp": "2026-04-22T02:30:00Z", "status": "COMPLETED", "backfill": true, "backfill_date": "2026-04-27T03:27:00Z"},
+  {"id": "backfill_007", "operation": "Professional resume creation", "timestamp": "2026-04-22T04:00:00Z", "status": "COMPLETED", "backfill": true, "backfill_date": "2026-04-27T03:27:00Z"},
+  {"id": "backfill_008", "operation": "Pulse consolidation (26 files → H:\\Trishula_Pulses)", "timestamp": "2026-04-23T01:00:00Z", "status": "COMPLETED", "backfill": true, "backfill_date": "2026-04-27T03:27:00Z"},
+  {"id": "backfill_009", "operation": "Law V added to TRISHULA_LAWS_COMPILATION.md", "timestamp": "2026-04-23T02:00:00Z", "status": "COMPLETED", "backfill": true, "backfill_date": "2026-04-27T03:27:00Z"},
+  {"id": "backfill_010", "operation": "Rule 2 added to L0 Constitution", "timestamp": "2026-04-23T02:30:00Z", "status": "COMPLETED", "backfill": true, "backfill_date": "2026-04-27T03:27:00Z"},
+  {"id": "backfill_011", "operation": "TRE v1.0 PineScript created", "timestamp": "2026-04-24T00:00:00Z", "status": "COMPLETED", "backfill": true, "backfill_date": "2026-04-27T03:27:00Z"},
+  {"id": "backfill_012", "operation": "TRE v2.0 PineScript created (12-engine)", "timestamp": "2026-04-24T01:00:00Z", "status": "COMPLETED", "backfill": true, "backfill_date": "2026-04-27T03:27:00Z"},
+  {"id": "backfill_013", "operation": "TRE v2.0 anti-ghost fix (3 iterations)", "timestamp": "2026-04-24T02:00:00Z", "status": "COMPLETED", "backfill": true, "backfill_date": "2026-04-27T03:27:00Z"},
+  {"id": "backfill_014", "operation": "24 .resolved.* duplicates purged", "timestamp": "2026-04-23T03:00:00Z", "status": "COMPLETED", "backfill": true, "backfill_date": "2026-04-27T03:27:00Z"}
+]

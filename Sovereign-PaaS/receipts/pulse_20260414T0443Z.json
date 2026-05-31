@@ -1,0 +1,24 @@
+{
+  "ledger_id": "TRISHULA-PULSE-20260414T0443Z",
+  "timestamp": "2026-04-14T04:43:00Z",
+  "node": "SHADOW-GATE",
+  "manifest": {
+    "pulse_artifact": "pulse_20260414T0443Z.md",
+    "vault_path": "H:/Trishula_Pulses/",
+    "protocol_verified": "pulse_template.md v2.0"
+  },
+  "compliance": {
+    "iron_bolt": "SUCCESS",
+    "soul_stitch": "SUCCESS",
+    "sovereign_healer": "ACTIVE",
+    "hypergraph_ledger": "UPGRADED"
+  },
+  "forensics": {
+    "triage_nodes": 10,
+    "market_gaps": 4,
+    "sqa_external_failures": 3,
+    "model_locked": "qwen2.5-coder:32b"
+  },
+  "merkle_root": "0x58c14a7e...",
+  "status": "PASSIVE_STANDBY"
+}

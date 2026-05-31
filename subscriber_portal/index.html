@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ TRISHULA Intelligence Nexus — Premium Sports Portal</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap');
+    
+    :root {
+      --bg-dark: #07090e;
+      --card-bg: rgba(13, 17, 28, 0.7);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --glow-purple: #8a2be2;
+      --glow-blue: #00f2fe;
+      --text-main: #f0f3f8;
+      --text-gray: #8c9bb4;
+      --accent-gold: #f0c040;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 242, 254, 0.1) 0%, transparent 40%);
+    }
+
+    header {
+      width: 100%;
+      padding: 24px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      font-size: 2rem;
+      background: linear-gradient(45deg, var(--glow-blue), var(--glow-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-gray);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    .cta-btn {
+      background: linear-gradient(135deg, var(--glow-blue), var(--glow-purple));
+      color: #ffffff;
+      padding: 10px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: linear-gradient(45deg, #ffffff, #8c9bb4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(45deg, var(--glow-blue), var(--glow-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-gray);
+      max-width: 700px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px;
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 40px;
+    }
+
+    .price-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 40px 32px;
+      backdrop-filter: blur(16px);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .price-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(138, 43, 226, 0.4);
+      box-shadow: 0 10px 30px rgba(138, 43, 226, 0.15);
+    }
+
+    .price-card.featured {
+      border: 2px solid var(--glow-blue);
+      box-shadow: 0 10px 30px rgba(0, 242, 254, 0.15);
+    }
+
+    .price-card.featured::before {
+      content: 'MOST POPULAR';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--glow-blue), var(--glow-purple));
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+    }
+
+    .price-card.black-tier {
+      border: 2px solid var(--accent-gold);
+    }
+
+    .price-card.black-tier::before {
+      content: 'THE SHARP SYNDICATE';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent-gold);
+      color: black;
+      font-size: 0.75rem;
+      font-weight: 900;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+    }
+
+    .tier-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .tier-price {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 24px;
+    }
+
+    .tier-price span {
+      font-size: 1rem;
+      color: var(--text-gray);
+      font-weight: 400;
+    }
+
+    .features-list {
+      list-style: none;
+      margin-bottom: 32px;
+      color: var(--text-gray);
+      text-align: left;
+    }
+
+    .features-list li {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+    }
+
+    .features-list li::before {
+      content: '✓';
+      color: var(--glow-blue);
+      font-weight: 900;
+    }
+
+    .price-card.black-tier .features-list li::before {
+      color: var(--accent-gold);
+    }
+
+    .btn-buy {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    .btn-buy:hover {
+      background: white;
+      color: black;
+    }
+
+    .price-card.featured .btn-buy {
+      background: linear-gradient(135deg, var(--glow-blue), var(--glow-purple));
+      border: none;
+      color: white;
+    }
+
+    .price-card.featured .btn-buy:hover {
+      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+    }
+
+    .price-card.black-tier .btn-buy {
+      background: var(--accent-gold);
+      border: none;
+      color: black;
+    }
+
+    .price-card.black-tier .btn-buy:hover {
+      box-shadow: 0 4px 15px rgba(240, 192, 64, 0.4);
+    }
+
+    .api-docs {
+      max-width: 1000px;
+      margin: 100px auto;
+      padding: 0 20px;
+    }
+
+    .api-docs h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .code-block {
+      background: rgba(13, 17, 28, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      font-family: 'Courier New', Courier, monospace;
+      text-align: left;
+      overflow-x: auto;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .code-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-gray);
+    }
+
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 48px;
+      text-align: center;
+      color: var(--text-gray);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-container">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text">TRISHULA NEXUS</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#pricing">Tiers</a></li>
+      <li><a href="#api-docs">API Documentation</a></li>
+      <li><a href="#dashboard">Dashboard</a></li>
+    </ul>
+    <a href="#pricing" class="cta-btn">ENTER PORTAL</a>
+  </header>
+
+  <section class="hero">
+    <h1>Autonomous Sport Intelligence <span>Multi-Cloud API</span></h1>
+    <p>Trishula Sovereign Swarm serves institutional grade high-EV sports arbitrage, injury scouting, and sharp money models. Zero physical hosting costs, 100% cloud arbitrage redundancy.</p>
+    <div style="height: 1px; background: linear-gradient(90deg, transparent, var(--glow-purple), transparent); width: 80%; margin: 0 auto;"></div>
+  </section>
+
+  <section id="pricing" class="pricing-grid">
+    
+    <div class="price-card">
+      <div>
+        <div class="tier-name">Scout</div>
+        <div class="tier-price">$4.99<span>/mo</span></div>
+        <ul class="features-list">
+          <li>Standard Game Lines</li>
+          <li>Basic Moneyline / Spreads</li>
+          <li>Low Confidence Models</li>
+          <li>1,000 API Requests/mo</li>
+        </ul>
+      </div>
+      <a href="#" class="btn-buy">Subscribe Scout</a>
+    </div>
+
+    <div class="price-card featured">
+      <div>
+        <div class="tier-name">Analyst</div>
+        <div class="tier-price">$9.99<span>/mo</span></div>
+        <ul class="features-list">
+          <li>All Scout Features</li>
+          <li>Batting Props (Hits, TBs)</li>
+          <li>Pitching Props (Strikeouts)</li>
+          <li>High Confidence Models</li>
+          <li>10,000 API Requests/mo</li>
+        </ul>
+      </div>
+      <a href="#" class="btn-buy">Subscribe Analyst</a>
+    </div>
+
+    <div class="price-card">
+      <div>
+        <div class="tier-name">Pro</div>
+        <div class="tier-price">$19.99<span>/mo</span></div>
+        <ul class="features-list">
+          <li>All Analyst Features</li>
+          <li>F5 Alternate Spreads</li>
+          <li>1st Inning NRFI/YRFI</li>
+          <li>Alternate Line Cheatsheets</li>
+          <li>50,000 API Requests/mo</li>
+        </ul>
+      </div>
+      <a href="#" class="btn-buy">Subscribe Pro</a>
+    </div>
+
+    <div class="price-card black-tier">
+      <div>
+        <div class="tier-name">🖤 Black</div>
+        <div class="tier-price">$100.00<span>/mo</span></div>
+        <ul class="features-list">
+          <li>100% Unrestricted Access</li>
+          <li>Dedicated 95%+ LOCKS</li>
+          <li>Real-time SMS Push Alert</li>
+          <li>Injury Sniper Live Feed</li>
+          <li>Unlimited API Requests</li>
+        </ul>
+      </div>
+      <a href="#" class="btn-buy">Subscribe Black</a>
+    </div>
+
+  </section>
+
+  <section id="api-docs" class="api-docs">
+    <h2>⚾ Developer Integration API</h2>
+    
+    <div class="code-block">
+      <span class="code-badge">HTTP GET</span>
+      <p style="color: #ff7b72;">GET <span style="color: #58a6ff;">https://api.trishulanexus.com/v1/picks</span></p>
+      <p style="color: var(--text-gray); margin-top: 12px;">Headers:</p>
+      <p style="color: #c9d1d9;">  x-api-key: <span style="color: #7ee787;">your_trishula_bearer_token</span></p>
+    </div>
+
+    <div class="code-block">
+      <span class="code-badge">JSON RESPONSE</span>
+      <pre style="color: #7ee787;">
+{
+  "tier": "Black",
+  "status": "SUCCESS",
+  "picks_count": 1,
+  "picks": [
+    {
+      "player": "Alec Bohm",
+      "team": "PHI",
+      "opp": "CIN",
+      "prop": "Hits",
+      "line": "o0.5",
+      "odds": "-242",
+      "confidence": "95%",
+      "pick": "OVER 0.5",
+      "rationale": "[LOCK] 9-game hit streak. 100% H2H vs CIN. Parlay anchor."
+    }
+  ]
+}</pre>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Trishula Sovereign Swarm. Under L0 Constitution. Infrastructure Sovereignty Secured.</p>
+  </footer>
+
+</body>
+</html>
