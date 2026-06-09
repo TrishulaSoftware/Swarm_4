@@ -88,7 +88,7 @@ def get_boto3_client():
 
 
 def ensure_bucket(s3, bucket: str, region: str):
-    """Create S3 bucket if it doesn't exist."""
+    """Create S3 bucket if it doesn't exist. Gracefully skips permissions we lack."""
     from botocore.exceptions import ClientError
 
     try:
@@ -102,14 +102,24 @@ def ensure_bucket(s3, bucket: str, region: str):
             print(f"  [S3] Creating bucket '{bucket}' in {region} ...")
             try:
                 if region == "us-east-1":
-                    # us-east-1 doesn't allow LocationConstraint
                     s3.create_bucket(Bucket=bucket)
                 else:
                     s3.create_bucket(
                         Bucket=bucket,
                         CreateBucketConfiguration={"LocationConstraint": region}
                     )
-                # Block all public access
+                print(f"  [S3] ✓ Bucket '{bucket}' created")
+            except ClientError as ce:
+                err_msg = str(ce)
+                # BucketAlreadyOwnedByYou = another region created it; fine
+                if "BucketAlreadyOwnedByYou" in err_msg or "BucketAlreadyExists" in err_msg:
+                    print(f"  [S3] Bucket '{bucket}' already exists (different region OK)")
+                else:
+                    print(f"  [S3] Create bucket error: {ce}")
+                    return False
+
+            # Best-effort: block public access (may fail if IAM lacks permission)
+            try:
                 s3.put_public_access_block(
                     Bucket=bucket,
                     PublicAccessBlockConfiguration={
@@ -119,22 +129,29 @@ def ensure_bucket(s3, bucket: str, region: str):
                         "RestrictPublicBuckets": True,
                     }
                 )
-                # Enable versioning for data safety
+                print(f"  [S3] Public access block applied ✓")
+            except ClientError:
+                print(f"  [S3] (Skip) PutPublicAccessBlock not permitted — bucket private by default")
+
+            # Best-effort: enable versioning
+            try:
                 s3.put_bucket_versioning(
                     Bucket=bucket,
                     VersioningConfiguration={"Status": "Enabled"}
                 )
-                print(f"  [S3] ✓ Bucket '{bucket}' created (versioning on, public blocked)")
-                return True
-            except ClientError as ce:
-                print(f"  [S3] Create bucket error: {ce}")
-                return False
+                print(f"  [S3] Versioning enabled ✓")
+            except ClientError:
+                print(f"  [S3] (Skip) PutBucketVersioning not permitted — continuing")
+
+            return True
+
         elif error_code == 403:
-            print(f"  [S3] Bucket '{bucket}' exists (owned by this account, access OK)")
+            print(f"  [S3] Bucket '{bucket}' exists (access OK, continuing)")
             return True
         else:
-            print(f"  [S3] Unexpected head_bucket error: {e}")
-            return False
+            print(f"  [S3] Unexpected head_bucket error ({error_code}): {e}")
+            # Attempt uploads anyway — bucket may exist in another region
+            return True
 
 
 def upload_file(s3, local_path: Path, bucket: str, prefix: str) -> dict:

@@ -8,7 +8,8 @@ WEBHOOKS = {
     "mlb_pick_ledger":   "https://discord.com/api/webhooks/1505740766763421747/1ixXZ2lH5d2hFdrBIsjYD6qs1_EALIe3_KBMatMuoO3lV01XP09Dh_vF41wBuJsjWClD",
     "mlb_parlays":       "https://discord.com/api/webhooks/1505778433701970081/IxF_N64X_lxfLY8lG203-RfB2-gQwDa1e3TN2nTmqmL12NogsW9WIHCMg84FTTMstPNm",
     "mlb_player_props":  "https://discord.com/api/webhooks/1505740244505460898/ljKVcu3cneupvC3-R9TGkPlU8BFulQV9iuaJYpNjoSXy7Y2t1jpgt2Oug9zJl1FNdysI",
-    "mlb_player_parlays": "https://discord.com/api/webhooks/1505805690135122042/tzQErDJBOMLhHMJhqB7GPAblXU-t13qTMrke69DDyOMXPT2wjbsZSrvdn0GfcB-HazfY",
+    "mlb_player_parlays":    "https://discord.com/api/webhooks/1505805690135122042/tzQErDJBOMLhHMJhqB7GPAblXU-t13qTMrke69DDyOMXPT2wjbsZSrvdn0GfcB-HazfY",
+    "mlb_team_prop_streak":  "https://discord.com/api/webhooks/1511467642429378633/7546FsNjb0SkaZjlzTbeVP5xjhbJgZi6U2tKnGr97Mnw0JXnqquIX4G1hPQJSvkApIk6",
 }
 
 SWARM_IDENTITY = {

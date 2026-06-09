@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# PYTHONIOENCODING=utf-8
 """
 =================================================================
-R2-9 STEP 1 — DB1 qmatrix_snapshots → CSV EXPORTER
+R2-9 STEP 1 -- DB1 qmatrix_snapshots -> CSV EXPORTER
 =================================================================
 Fetches ALL rows from qmatrix_snapshots via ORDS (paginated)
 and writes to ml_training_data.csv with all numeric ML columns.
 
 Run: python _export_db1_to_csv.py
-Output: H:\Trishula\Swarm_4_Integration\Salvo_Staging\ml_training_data.csv
+Output: H:\\Trishula\\Swarm_4_Integration\\Salvo_Staging\\ml_training_data.csv
 =================================================================
 """
 
@@ -206,7 +207,7 @@ def print_summary(rows: list):
 
 def main():
     print(f"\n{'='*60}")
-    print("  R2-9 STEP 1: DB1 → CSV EXPORT")
+    print("  R2-9 STEP 1: DB1 -> CSV EXPORT")
     print(f"  {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"{'='*60}\n")
 
@@ -220,7 +221,7 @@ def main():
     # 2. Write CSV
     print(f"\n[CSV] Writing {len(rows)} rows to {OUT_CSV} ...")
     written = write_csv(rows, OUT_CSV)
-    print(f"[CSV] ✓ Wrote {written} rows → {OUT_CSV}")
+    print(f"[CSV] Wrote {written} rows -> {OUT_CSV}")
 
     # 3. Print summary
     print_summary(rows)
@@ -229,7 +230,7 @@ def main():
     raw_json = BASE_DIR / "ml_raw_snapshots.json"
     with open(raw_json, "w", encoding="utf-8") as f:
         json.dump(rows, f, indent=2, default=str)
-    print(f"[JSON] Raw dump → {raw_json}")
+    print(f"[JSON] Raw dump -> {raw_json}")
 
     return True
 

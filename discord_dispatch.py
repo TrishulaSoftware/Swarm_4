@@ -438,11 +438,15 @@ def post_html_screenshot(html_path):
         browser.close()
         
     print("  [WAIT] Uploading Images to Discord Webhook...")
-    for png in [base_png_path, alt_png_path]:
+    routing = {
+        base_png_path: WEBHOOKS["mlb_team_props"],
+        alt_png_path: WEBHOOKS["mlb_team_prop_streak"]
+    }
+    for png, webhook_url in routing.items():
         with open(png, "rb") as f:
             files = {"file": (png.split("\\")[-1], f, "image/png")}
             payload = {"content": f"**SOCIAL MEDIA ASSET READY**\nGenerated `{png.split(chr(92))[-1]}`"}
-            r = requests.post(WEBHOOK, data=payload, files=files)
+            r = requests.post(webhook_url, data=payload, files=files)
             
             if r.status_code in [200, 204]:
                 print(f"  [OK] {png.split(chr(92))[-1]} uploaded to Discord successfully.")

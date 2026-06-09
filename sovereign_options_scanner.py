@@ -2366,7 +2366,6 @@ def run_premarket_sweep(dry_run: bool = False) -> dict:
     else:
         regime = "FLAT OPEN"
         regime_emoji = "⬜"
-    print(f"  [REGIME] {regime_emoji} {regime} (SPY gap: {spy_gap:+.2f}%" if spy_gap is not None else f"  [REGIME] {regime}")
     if spy_gap is not None:
         print(f"  [REGIME] {regime_emoji} {regime} (SPY gap: {spy_gap:+.2f}%)")
     else:
@@ -2530,9 +2529,158 @@ def run_premarket_sweep(dry_run: bool = False) -> dict:
     return result
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# AUTO-BACKTEST: Monday 6 PM — score prior-week snapshots vs actual closes
+# ─────────────────────────────────────────────────────────────────────────────
+def run_backtest() -> None:
+    """
+    Queries DB1 for snapshots where actual_close IS NULL and expiry < today.
+    Fetches actual close from yfinance, computes WIN/MISS vs max_pain (±1%),
+    writes outcome back to DB1 via ORDS PATCH, and posts a summary to Discord.
+    """
+    import math
+    today = datetime.date.today()
+    now_str = datetime.datetime.now().strftime("%A %b %d %Y  %I:%M %p ET")
+    print(f"\n{'='*60}")
+    print(f" Q-MATRIX AUTO-BACKTEST — {now_str}")
+    print(f"{'='*60}")
+
+    # ── 1. Fetch unscored rows from DB1 via _db1_persistence ─────────────────
+    try:
+        from _db1_persistence import _ORDS_BASE as _BT_BASE, _ORDS_USER as _BT_USER, _get_pass as _bt_pass
+        _bt_url = _BT_BASE + "/qmatrix_snapshots/?limit=500"
+        resp = requests.get(_bt_url, auth=(_BT_USER, _bt_pass()), verify=False, timeout=20)
+        rows = resp.json().get("items", []) if resp.status_code == 200 else []
+    except Exception as e:
+        print(f"[BACKTEST] DB1 fetch error: {e}")
+        return
+
+    # Filter: expiry has passed AND actual_close is still null
+    pending = [
+        r for r in rows
+        if r.get("actual_close") is None
+        and r.get("expiry")
+        and datetime.date.fromisoformat(r["expiry"][:10]) < today
+    ]
+
+    print(f"[BACKTEST] Found {len(pending)} unscored expired snapshots.")
+    if not pending:
+        print("[BACKTEST] Nothing to score — all rows current. Exiting.")
+        _post_backtest_discord(now_str, scored=[], skipped=0)
+        return
+
+    # ── 2. Score each row ──────────────────────────────────────────────────────
+    scored = []
+    skipped = 0
+    for row in pending:
+        symbol   = row.get("ticker", "") or row.get("symbol", "")  # DB1 uses 'ticker'
+        expiry   = row.get("expiry", "")[:10]
+        max_pain = row.get("max_pain")
+        row_id   = row.get("id") or row.get("snapshot_id")
+        if not symbol or not expiry or not max_pain or not row_id:
+            skipped += 1
+            continue
+        try:
+            tk       = yf.Ticker(symbol)
+            hist     = tk.history(start=expiry, end=str(datetime.date.fromisoformat(expiry) + datetime.timedelta(days=3)))
+            if hist.empty:
+                skipped += 1
+                continue
+            # Use close on expiry day (first row)
+            actual_close = round(float(hist["Close"].iloc[0]), 4)
+            pct_from_mp  = abs(actual_close - float(max_pain)) / float(max_pain) * 100
+            outcome      = "WIN" if pct_from_mp <= 1.0 else "MISS"
+            print(f"  [{symbol}] expiry={expiry}  close=${actual_close:.2f}  max_pain=${float(max_pain):.2f}  {pct_from_mp:.2f}%  → {outcome}")
+
+            # ── 3. UPDATE back to DB1 via SQL ────────────────────────────────────
+            try:
+                from _db1_persistence import _sql_exec as _bt_sql
+                upd = (
+                    f"UPDATE qmatrix_snapshots "
+                    f"SET actual_close={actual_close}, outcome='{outcome}' "
+                    f"WHERE id={row_id}"
+                )
+                ok = _bt_sql(upd)
+                if ok:
+                    _bt_sql("COMMIT")
+                else:
+                    print(f"  [{symbol}] DB1 UPDATE failed — continuing")
+            except Exception as pe:
+                print(f"  [{symbol}] DB1 UPDATE exception: {pe}")
+
+            scored.append({
+                "symbol": symbol, "expiry": expiry,
+                "actual_close": actual_close, "max_pain": float(max_pain),
+                "pct_from_mp": round(pct_from_mp, 2), "outcome": outcome
+            })
+        except Exception as ex:
+            print(f"  [{symbol}] scoring error: {ex}")
+            skipped += 1
+
+    # ── 4. Summary ─────────────────────────────────────────────────────────────
+    wins   = sum(1 for s in scored if s["outcome"] == "WIN")
+    misses = sum(1 for s in scored if s["outcome"] == "MISS")
+    acc    = round(wins / len(scored) * 100, 1) if scored else 0.0
+    print(f"\n[BACKTEST] Complete — {wins}W / {misses}M  Accuracy: {acc}%  Skipped: {skipped}")
+    _post_backtest_discord(now_str, scored=scored, skipped=skipped)
+
+
+def _post_backtest_discord(now_str: str, scored: list, skipped: int) -> None:
+    """Post backtest summary embed to Discord #qm-backtest channel."""
+    wins   = sum(1 for s in scored if s["outcome"] == "WIN")
+    misses = sum(1 for s in scored if s["outcome"] == "MISS")
+    total  = len(scored)
+    acc    = round(wins / total * 100, 1) if total else 0.0
+
+    color = 0x00cc88 if acc >= 60 else (0xffbd15 if acc >= 40 else 0xff3344)
+
+    # Build row table
+    if scored:
+        rows_lines = []
+        for s in sorted(scored, key=lambda x: x["pct_from_mp"]):
+            icon = "✅" if s["outcome"] == "WIN" else "❌"
+            rows_lines.append(
+                f"{icon} `{s['symbol']}` exp `{s['expiry']}`  close `${s['actual_close']:.2f}`  "
+                f"MP `${s['max_pain']:.2f}`  Δ `{s['pct_from_mp']:.2f}%`"
+            )
+        detail_val = "\n".join(rows_lines[:15])  # Discord 1024-char field limit
+        if len(rows_lines) > 15:
+            detail_val += f"\n… +{len(rows_lines)-15} more"
+    else:
+        detail_val = "No expired snapshots to score this week."
+
+    embed = {
+        "title": f"📊 Q-MATRIX AUTO-BACKTEST  ·  {now_str}",
+        "description": f"### Max-Pain Pin Accuracy — Week Ending {datetime.date.today().strftime('%b %d, %Y')}",
+        "color": color,
+        "fields": [
+            {"name": "📈 Results",
+             "value": f"**{wins}** WIN  /  **{misses}** MISS  /  **{skipped}** Skipped\n**Accuracy: {acc}%** (within ±1% of Max Pain at expiry)",
+             "inline": False},
+            {"name": "📋 Ticker Breakdown",
+             "value": detail_val,
+             "inline": False},
+            {"name": "🤖 ML Pipeline",
+             "value": f"Labels written to DB1. Training dataset growing → SageMaker AutoPilot threshold: **500 rows**.",
+             "inline": False},
+        ],
+        "footer": {"text": "Q-Matrix Backtest Engine  ·  Trishula QuantNode"},
+        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    }
+    try:
+        webhook = WEBHOOK_MACRO  # post to #macro-pulse or add a dedicated backtest webhook
+        r = requests.post(webhook, json={"embeds": [embed]}, timeout=20)
+        if r.status_code in (200, 204):
+            print("[BACKTEST] ✓ Summary posted to Discord.")
+        else:
+            print(f"[BACKTEST] Discord error {r.status_code}: {r.text[:120]}")
+    except Exception as e:
+        print(f"[BACKTEST] Discord post error: {e}")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Trishula Sovereign Options Scanner")
-    parser.add_argument("--mode",  choices=["weekly", "daily", "both", "premarket"], default="both",
+    parser.add_argument("--mode",  choices=["weekly", "daily", "both", "premarket", "backtest"], default="both",
                         help="Sweep mode (default: both)")
     parser.add_argument("--force", action="store_true",
                         help="Run even if today is not a trading day")
@@ -2555,6 +2703,11 @@ def main():
 
     if args.mode == "premarket":
         run_premarket_sweep(dry_run=getattr(args, "dry_run", False))
+        print("\n[DONE]")
+        return
+
+    if args.mode == "backtest":
+        run_backtest()
         print("\n[DONE]")
         return
 

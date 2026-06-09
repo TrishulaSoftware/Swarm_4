@@ -36,6 +36,10 @@ INTERACTIVE:
 
 import sys, os, json, re, csv, io, argparse, datetime, time
 
+# Reconfigure stdout/stderr for UTF-8 to prevent Unicode errors on Windows
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 # Add parent dir to path so we can import siblings
 _BASE = os.path.dirname(os.path.abspath(__file__))
 if _BASE not in sys.path:
@@ -352,13 +356,22 @@ def relay(
     print(f"  [RELAY] {len(picks)} pick(s) parsed and normalized")
 
     # ── Preview ──────────────────────────────────────────────
-    print("\n  ┌── Pick Preview " + "─" * 40)
+    print("\n  +-- Pick Preview " + "-" * 40)
     for i, p in enumerate(picks, 1):
-        line_str = f" {p['line_value']:+g}" if p.get("line_value") is not None else ""
-        odds_str = f" ({'+' if (p.get('odds') or 0) > 0 else ''}{p.get('odds', '?')})" if p.get("odds") else ""
-        print(f"  │ #{i} {p['sport']:6} | {p.get('game','?')[:25]:25} | {p['pick_side']:12} | "
+        try:
+            lv = p.get("line_value")
+            line_str = f" {float(lv):+g}" if lv is not None and str(lv).strip() != "" else ""
+        except (ValueError, TypeError):
+            line_str = ""
+        try:
+            ov = p.get("odds")
+            sign = "+" if (ov or 0) > 0 else ""
+            odds_str = f" ({sign}{ov})" if ov else ""
+        except (ValueError, TypeError):
+            odds_str = ""
+        print(f"  | #{i} {p['sport']:6} | {p.get('game','?')[:25]:25} | {p['pick_side']:12} | "
               f"{p['pick_type']:7}{line_str}{odds_str} | {p.get('units',1)}u | {p['confidence']}")
-    print("  └" + "─" * 55)
+    print("  +" + "-" * 55)
 
     if dry_run:
         print("\n  [DRY RUN] Skipping DB write and Discord post.")
@@ -388,11 +401,11 @@ def relay(
     # ── Summary ──────────────────────────────────────────────
     summary_lines = [
         f"",
-        f"  ╔══ RELAY COMPLETE ══╗",
-        f"  ║ Picks parsed :  {len(picks)}",
-        f"  ║ DB1 saved    :  {saved_count}/{len(picks)}",
-        f"  ║ Discord      :  {'✅ OK' if discord_ok else '⚠️  skipped/failed'}",
-        f"  ╚{'═' * 20}╝",
+        f"  +==  RELAY COMPLETE  ==",
+        f"  |  Picks parsed :  {len(picks)}",
+        f"  |  DB1 saved    :  {saved_count}/{len(picks)}",
+        f"  |  Discord      :  {'OK' if discord_ok else 'skipped/failed'}",
+        f"  +" + "=" * 22,
         f"",
     ]
     for line in summary_lines:
@@ -464,7 +477,7 @@ def main():
         dry_run      = args.dry_run,
     )
 
-    sys.exit(0 if result["db_results"] else 1)
+    sys.exit(0 if (result["db_results"] or (args.dry_run and result["picks"])) else 1)
 
 
 if __name__ == "__main__":

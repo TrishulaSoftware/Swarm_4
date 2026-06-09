@@ -1,10 +1,12 @@
-﻿# === SECRETS & CREDENTIALS ===
+# === SECRETS & CREDENTIALS ===
 .env
 *.env
 .env.*
 oracle_wallet/
 wallet/
 *_wallet/
+oracle_wallet2/
+*wallet*/
 *.pem
 *.key
 *.p12
@@ -122,3 +124,4 @@ store_*.py
 generate_*.py
 send_wave*.py
 send_60day*.py
+*.tar.gz
