@@ -204,9 +204,9 @@ def post_to_discord(signal: dict, screenshot: bytes | None):
     # Build embed
     if channel_key == "rdm-test-30m":
         title = {
-            "BUY":  "⚡ RED MAGE ORDER BLOCK — LONG ENTRY",
-            "SELL": "🔴 RED MAGE ORDER BLOCK — SHORT ENTRY",
-            "EXIT": f"🏁 RED MAGE ORDER BLOCK — EXIT ({outcome})" if outcome else "🏁 RED MAGE ORDER BLOCK — EXIT",
+            "BUY":  "⚡ RED MAGE — BULLISH ORDER BLOCK",
+            "SELL": "🔴 RED MAGE — BEARISH ORDER BLOCK",
+            "EXIT": f"🏁 RED MAGE — ORDER BLOCK CLEARED ({outcome})" if outcome else "🏁 RED MAGE — ORDER BLOCK CLEARED",
         }.get(action, f"RED MAGE ORDER BLOCK {action}")
         footer_text = f"Trishula Swarm · Red Mage Order Block · {ts}"
     else:
