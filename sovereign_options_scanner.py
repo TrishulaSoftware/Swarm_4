@@ -1351,7 +1351,7 @@ def _build_dboi_field(d: dict, gex_zero: float = None) -> str:
 # ─────────────────────────────────────────────────────────────────────────────
 # LOCAL OLLAMA THESIS GENERATION (P3-C)
 # ─────────────────────────────────────────────────────────────────────────────
-def generate_local_ollama_thesis(d: dict, squeeze_status: str, wvf_val: float) -> str:
+def generate_local_ollama_thesis(d: dict, squeeze_status: str, wvf_val: float, tech_metrics: dict = None, st_data: dict = None) -> str:
     """Query local Ollama instance for structured options thesis, with fallback."""
     try:
         # Check available models
@@ -1387,15 +1387,27 @@ def generate_local_ollama_thesis(d: dict, squeeze_status: str, wvf_val: float) -
         direction = "BULLISH MAGNET" if d["net_gex_m"] >= 0 else "BEARISH REVERSIBLE"
         gex_sign = "+" if d["net_gex_m"] >= 0 else ""
         
+        # Build technical & sentiment blocks for the prompt
+        tech_lines = ""
+        if tech_metrics:
+            tech_lines += f"- Underlying Trend: {tech_metrics.get('trend', 'N/A')} (5-Day Return: {tech_metrics.get('ret_5d', 0.0):.1f}%, RSI(14): {tech_metrics.get('rsi', 50.0):.1f})\n"
+        tech_lines += f"- Volatility (Williams Vix Fix): {wvf_val:.2f}%\n"
+        tech_lines += f"- Squeeze Status: {squeeze_status}\n"
+        
+        sent_lines = ""
+        if st_data and st_data.get("source") != "unavailable":
+            sent_lines += f"- Retail StockTwits Sentiment: {st_data.get('bullish_pct', 50.0):.1f}% Bullish\n"
+
         prompt = (
-            f"You are Trishula Black, an elite institutional options strategist. Write a concise, high-conviction 2-sentence market intelligence thesis for {d['symbol']} based on this option chain data:\n"
-            f"- Spot Price: ${d['spot']:.2f}\n"
-            f"- Max Pain: ${d['max_pain']:.0f}\n"
-            f"- Net GEX: {gex_sign}{d['net_gex_m']}M\n"
-            f"- Put/Call Ratio: {d['pc_ratio']} (Top Call Wall: ${d['top_call_wall']:.0f}, Top Put Wall: ${d['top_put_wall']:.0f})\n"
-            f"- Technical Squeeze Status: {squeeze_status}\n"
-            f"- Williams Vix Fix: {wvf_val:.2f}%\n\n"
-            f"Analyze the dealer hedging gravity and potential pinning/expansion. Output ONLY the 2-sentence quote. Do not include introductory text, explanations, or label headers. Keep it professional, sharp, and technical."
+            f"You are Trishula Black, an elite institutional options strategist. Write a concise, high-conviction 2-sentence market intelligence thesis for {d['symbol']} based on this option chain and technical data:\n\n"
+            f"Option Chain Data:\n"
+            f"- Spot Price: ${d['spot']:.2f} (Max Pain: ${d['max_pain']:.0f}, Net GEX: {gex_sign}{d['net_gex_m']}M)\n"
+            f"- Put/Call Ratio: {d['pc_ratio']} (Top Call Wall: ${d['top_call_wall']:.0f}, Top Put Wall: ${d['top_put_wall']:.0f})\n\n"
+            f"Technical Metrics:\n"
+            f"{tech_lines}\n"
+            f"Sentiment Data:\n"
+            f"{sent_lines if sent_lines else '- Retail Sentiment: N/A'}\n\n"
+            f"Analyze the dealer hedging gravity, retail capitulation, and potential breakout/pinning direction. Output ONLY the 2-sentence quote. Do not include introductory text, explanations, or label headers. Keep it professional, sharp, and technical."
         )
         
         payload = {
@@ -1435,6 +1447,7 @@ def send_to_discord(d: dict, chart_buf: io.BytesIO,
 
     # ── ADVANCED TECH CONFLUENCES & AI THESIS (Panel 1 Integration) ──
     wvf_val, squeeze_status, ai_thesis = 4.0, "🟢 COMPRESSED (Released)", ""
+    tech_metrics = None
     try:
         import pandas as pd
         tk = yf.Ticker(d["symbol"])
@@ -1459,11 +1472,43 @@ def send_to_discord(d: dict, chart_buf: io.BytesIO,
             kc_lower = ema20 - 1.5 * atr20
             squeeze_active = (bb_upper < kc_upper).iloc[-1] and (bb_lower > kc_lower).iloc[-1]
             squeeze_status = "🔴 **ACTIVE SQUEEZE** (Coiled)" if squeeze_active else "🟢 **RELEASED** (Dispersion)"
+            
+            # Additional Technical Metrics for Ollama Prompt
+            # 1. RSI (14)
+            delta = closes.diff()
+            gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
+            loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
+            rs = gain / (loss + 1e-9)
+            rsi = 100 - (100 / (1 + rs))
+            rsi_val = float(rsi.iloc[-1])
+            # 2. Trend (20 SMA vs 50 SMA)
+            sma50 = closes.rolling(window=50).mean()
+            sma50_val = float(sma50.iloc[-1])
+            sma20_val = float(sma20.iloc[-1])
+            trend = "BULLISH" if sma20_val > sma50_val else "BEARISH"
+            # 3. 5-Day Return
+            ret_5d = ((closes.iloc[-1] - closes.iloc[-6]) / closes.iloc[-6]) * 100
+            
+            tech_metrics = {
+                "rsi": rsi_val,
+                "trend": trend,
+                "ret_5d": ret_5d,
+                "wvf": wvf_val,
+                "squeeze": squeeze_status
+            }
     except Exception as e:
         print(f"  [{d['symbol']}] Technical confluence calculation error: {e}")
 
+    # Fetch StockTwits sentiment if available
+    st_data_dict = {"score": 0.0, "bullish_pct": 0.0, "source": "unavailable"}
+    if _STOCKTWITS_AVAILABLE:
+        try:
+            st_data_dict = _st_sentiment(d["symbol"])
+        except Exception:
+            pass
+
     # Generate Swarm AI Expert Thesis (Local Ollama first, fallback to deterministic)
-    ai_thesis = generate_local_ollama_thesis(d, squeeze_status, wvf_val)
+    ai_thesis = generate_local_ollama_thesis(d, squeeze_status, wvf_val, tech_metrics, st_data_dict)
     if not ai_thesis:
         direction = "BULLISH MAGNET" if d["net_gex_m"] >= 0 else "BEARISH REVERSIBLE"
         ai_thesis = (f"\"{d['symbol']} spot closes at ${d['spot']:.2f} showing an {squeeze_status.replace('**', '')} "
