@@ -19,6 +19,7 @@ Usage:
 """
 
 import os, sys, json, asyncio, io, logging
+from PIL import Image, ImageEnhance
 from datetime import datetime
 from pathlib import Path
 from dotenv import load_dotenv
@@ -34,8 +35,9 @@ TV_PASSWORD        = os.getenv("TV_PASSWORD", "")
 TV_CHART_URL       = os.getenv("TV_CHART_URL", "https://www.tradingview.com/chart/NR3yo9nj/?symbol=AMEX%3ASPY")
 WEBHOOKS = {
     "default": os.getenv("STARFALL_DISCORD_WEBHOOK", "https://discord.com/api/webhooks/1513368284853047448/8fR4M7i3CpZH26bvud-xZ4wEsW_gf5SQ4ktt-X3rKQFI4IHT6lAnUUPBAyXvvOwaNYH3"),
-    "forex-10m": os.getenv("STARFALL_DISCORD_WEBHOOK_FOREX_10M", "https://discord.com/api/webhooks/1513341978539200713/dFCiyDgZ5W5PHzKWCxvDMbaYdtDzmXLGglXsomvMRRsTbfY05Lc7p_ZPrfv4531nPdNT"),
-    "crypto-10m": os.getenv("STARFALL_DISCORD_WEBHOOK_CRYPTO_10M", "https://discord.com/api/webhooks/1513344609072320544/1PaVBMYqHtd54CTbaziUVzn154DYFpohsCwHsRKNsStOb3Y5CPigGp49sWjWhuWoAAWJ"),
+    "starfall-main-test": os.getenv("STARFALL_DISCORD_WEBHOOK_MAIN_TEST", "https://discord.com/api/webhooks/1513368284853047448/8fR4M7i3CpZH26bvud-xZ4wEsW_gf5SQ4ktt-X3rKQFI4IHT6lAnUUPBAyXvvOwaNYH3"),
+    "forex-10m": os.getenv("STARFALL_DISCORD_WEBHOOK_FOREX_10M", "https://discord.com/api/webhooks/1508274623303909507/3Jh2EKwZ_ihnmVRB4yCgtpgobzQBD0B8Zcg_iKmh4EPntQNe9tnAm03oqPQFNQHl3fQz"),
+    "crypto-10m": os.getenv("STARFALL_DISCORD_WEBHOOK_CRYPTO_10M", "https://discord.com/api/webhooks/1508274523948974190/fZ2p9DFKIrs3WZZvgujjjhooIeUaX5sEtYjpJKd6gWXNnV5E0XJhIQUAVPpS0GWzHTXb"),
     "rdm-test-30m": os.getenv("STARFALL_DISCORD_WEBHOOK_RDM_TEST_30M", "https://discord.com/api/webhooks/1513369629752430672/onWCBf0liCB4hcG__Blr1SlxSroCcVe4PwDFTR7eOjyJ7pJvTfLRziIID76NF4-OXTRS")
 }
 SESSION_FILE       = Path("tv_session.json")
@@ -59,6 +61,53 @@ logging.basicConfig(
     ]
 )
 log = logging.getLogger()
+
+# ── Watermark ─────────────────────────────────────────────────────────────────
+
+WATERMARK_PATH = Path(r"H:\Trishula_Logo3.webp")
+
+def apply_watermark(screenshot_bytes: bytes, opacity: float = 0.18, scale: float = 0.38) -> bytes:
+    """Overlay the Trishula logo centered on the chart screenshot."""
+    try:
+        chart = Image.open(io.BytesIO(screenshot_bytes)).convert("RGBA")
+        cw, ch = chart.size
+
+        logo = Image.open(WATERMARK_PATH).convert("RGBA")
+
+        # Make black pixels transparent so only the orange trident shows
+        r, g, b, a = logo.split()
+        pixels = logo.load()
+        lw, lh = logo.size
+        for y in range(lh):
+            for x in range(lw):
+                pr, pg, pb, pa = pixels[x, y]
+                # If pixel is near-black, make it transparent
+                if pr < 40 and pg < 40 and pb < 40:
+                    pixels[x, y] = (pr, pg, pb, 0)
+
+        # Resize logo to scale% of chart width
+        new_w = int(cw * scale)
+        new_h = int(logo.height * (new_w / logo.width))
+        logo = logo.resize((new_w, new_h), Image.LANCZOS)
+
+        # Apply opacity
+        r2, g2, b2, a2 = logo.split()
+        a2 = ImageEnhance.Brightness(a2).enhance(opacity)
+        logo.putalpha(a2)
+
+        # Center on chart
+        paste_x = (cw - new_w) // 2
+        paste_y = (ch - new_h) // 2
+
+        chart.paste(logo, (paste_x, paste_y), logo)
+
+        out = io.BytesIO()
+        chart.convert("RGB").save(out, format="PNG")
+        log.info("  Watermark applied to chart screenshot.")
+        return out.getvalue()
+    except Exception as e:
+        log.warning(f"  Watermark failed (using original): {e}")
+        return screenshot_bytes
 
 # ── TradingView Screenshot ─────────────────────────────────────────────────────
 
@@ -259,6 +308,8 @@ def handle_signal(signal: dict):
     log.info(f"  Signal: {signal}")
     symbol = signal.get("pair")
     screenshot = asyncio.run(screenshot_tv(symbol))
+    if screenshot:
+        screenshot = apply_watermark(screenshot)
     post_to_discord(signal, screenshot)
 
 # ── Flask Webhook Receiver ─────────────────────────────────────────────────────
