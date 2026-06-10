@@ -1349,6 +1349,79 @@ def _build_dboi_field(d: dict, gex_zero: float = None) -> str:
     return "\n".join(lines)
 
 # ─────────────────────────────────────────────────────────────────────────────
+# LOCAL OLLAMA THESIS GENERATION (P3-C)
+# ─────────────────────────────────────────────────────────────────────────────
+def generate_local_ollama_thesis(d: dict, squeeze_status: str, wvf_val: float) -> str:
+    """Query local Ollama instance for structured options thesis, with fallback."""
+    try:
+        # Check available models
+        r_models = requests.get("http://localhost:11434/api/tags", timeout=2)
+        if r_models.status_code != 200:
+            return ""
+        
+        models = [m["name"] for m in r_models.json().get("models", [])]
+        preferred = ["qwen2.5-coder:7b", "llama3:latest", "trishula-core-kill:latest", "dolphin-llama3:latest", "llama3.3:latest"]
+        selected_model = None
+        for p in preferred:
+            if p in models:
+                selected_model = p
+                break
+        
+        if not selected_model:
+            # Fallback to prefix matching
+            for p in preferred:
+                prefix = p.split(":")[0]
+                for m in models:
+                    if m.startswith(prefix):
+                        selected_model = m
+                        break
+                if selected_model:
+                    break
+        
+        if not selected_model and models:
+            selected_model = models[0]
+            
+        if not selected_model:
+            return ""
+
+        direction = "BULLISH MAGNET" if d["net_gex_m"] >= 0 else "BEARISH REVERSIBLE"
+        gex_sign = "+" if d["net_gex_m"] >= 0 else ""
+        
+        prompt = (
+            f"You are Trishula Black, an elite institutional options strategist. Write a concise, high-conviction 2-sentence market intelligence thesis for {d['symbol']} based on this option chain data:\n"
+            f"- Spot Price: ${d['spot']:.2f}\n"
+            f"- Max Pain: ${d['max_pain']:.0f}\n"
+            f"- Net GEX: {gex_sign}{d['net_gex_m']}M\n"
+            f"- Put/Call Ratio: {d['pc_ratio']} (Top Call Wall: ${d['top_call_wall']:.0f}, Top Put Wall: ${d['top_put_wall']:.0f})\n"
+            f"- Technical Squeeze Status: {squeeze_status}\n"
+            f"- Williams Vix Fix: {wvf_val:.2f}%\n\n"
+            f"Analyze the dealer hedging gravity and potential pinning/expansion. Output ONLY the 2-sentence quote. Do not include introductory text, explanations, or label headers. Keep it professional, sharp, and technical."
+        )
+        
+        payload = {
+            "model": selected_model,
+            "prompt": prompt,
+            "stream": False,
+            "options": {
+                "temperature": 0.2,
+                "max_tokens": 120
+            }
+        }
+        
+        # 15s timeout for fast execution
+        r = requests.post("http://localhost:11434/api/generate", json=payload, timeout=15)
+        if r.status_code == 200:
+            res = r.json()
+            thesis = res.get("response", "").strip()
+            # Clean up any wrapping quotes the model might have returned
+            if thesis.startswith('"') and thesis.endswith('"'):
+                thesis = thesis[1:-1].strip()
+            return f"\"{thesis}\""
+    except Exception as e:
+        print(f"  [Ollama] Local thesis generation failed: {e} (using fallback)")
+    return ""
+
+# ─────────────────────────────────────────────────────────────────────────────
 # DISCORD SEND
 # ─────────────────────────────────────────────────────────────────────────────
 def send_to_discord(d: dict, chart_buf: io.BytesIO,
@@ -1389,13 +1462,16 @@ def send_to_discord(d: dict, chart_buf: io.BytesIO,
     except Exception as e:
         print(f"  [{d['symbol']}] Technical confluence calculation error: {e}")
 
-    # Generate Swarm AI Expert Thesis deterministically
-    direction = "BULLISH MAGNET" if d["net_gex_m"] >= 0 else "BEARISH REVERSIBLE"
-    ai_thesis = (f"\"{d['symbol']} spot closes at ${d['spot']:.2f} showing an {squeeze_status.replace('**', '')} "
-                 f"options structure. Strong option walls reveal a massive {direction} pinning at the "
-                 f"${d['top_call_wall'] if d['net_gex_m'] >= 0 else d['top_put_wall']:.0f} wall level with "
-                 f"{gex_sign}{d['net_gex_m']}M GEX force. Expect dealer hedging gravity to forcefully attract price "
-                 f"action as expiration approaches.\"")
+    # Generate Swarm AI Expert Thesis (Local Ollama first, fallback to deterministic)
+    ai_thesis = generate_local_ollama_thesis(d, squeeze_status, wvf_val)
+    if not ai_thesis:
+        direction = "BULLISH MAGNET" if d["net_gex_m"] >= 0 else "BEARISH REVERSIBLE"
+        ai_thesis = (f"\"{d['symbol']} spot closes at ${d['spot']:.2f} showing an {squeeze_status.replace('**', '')} "
+                     f"options structure. Strong option walls reveal a massive {direction} pinning at the "
+                     f"${d['top_call_wall'] if d['net_gex_m'] >= 0 else d['top_put_wall']:.0f} wall level with "
+                     f"{gex_sign}{d['net_gex_m']}M GEX force. Expect dealer hedging gravity to forcefully attract price "
+                     f"action as expiration approaches.\"")
+
 
     anomaly_lines = ""
     for side, K, ratio, vol in d["anomalies"][:3]:
